@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 
-typedef struct Node {.    /* What the node is:
+typedef struct Node {    /* What the node is:
        Pointer to next node
        Each node has data
     */
@@ -10,8 +10,8 @@ typedef struct Node {.    /* What the node is:
     int data;
 }Node;
 
-struct Node * createNode (int d) {
-    struct Node * newNode = malloc(sizeof(struct Node));
+Node * createNode (int d) {
+    Node * newNode = malloc(sizeof(Node));
     newNode->next = NULL;
     newNode->data = d;
     return newNode;
@@ -22,19 +22,19 @@ struct Node * createNode (int d) {
     */
 }
 //return status if memory runs out
-int appendToTail(struct Node* head, int d) {
-    struct Node* end = createNode(d);
+int appendToTail(Node* head, int d) {
+    Node* end = createNode(d);
     if(end == NULL) {
         return -1;
     }
-    struct Node* iter = head;
+    Node* iter = head;
     while (iter->next != NULL) {
         iter = iter->next;
     }
     iter->next = end;
     return 1;
 }
-struct Node * findNode(struct Node * head, int d) {
+Node * findNode(Node * head, int d) {
     while(head != NULL) {
         if(head->data == d) {
             printf("FOUND %d\n", d);
@@ -47,9 +47,9 @@ struct Node * findNode(struct Node * head, int d) {
 }
 
 //Deletes node but not head tail
-void deleteNode(struct Node* n) {
+void deleteNode(Node* n) {
     if(n->next != NULL) {
-        struct Node* temp = n->next;
+        Node* temp = n->next;
     }
     n->data = n->next->data;
     n->next = n->next->next;
@@ -57,8 +57,8 @@ void deleteNode(struct Node* n) {
 }
 
 //assign type def struct --> todo
-void deleteMid(struct Node* n) {
-    struct Node* temp = n->next;
+void deleteMid(Node* n) {
+    Node* temp = n->next;
 /*    if(n->next != NULL) {
         struct Node* temp = n->next;
     }*/
@@ -75,8 +75,8 @@ void deleteMid(struct Node* n) {
 }
 
 //print out linked list
-void printList(struct Node* n) {
-    struct Node* iter = n;
+void printList(Node* n) {
+    Node* iter = n;
     printf(" %d ", iter->data);
     iter = iter->next;
     while(iter != NULL) {
@@ -87,13 +87,30 @@ void printList(struct Node* n) {
     printf("\nFinished!\n");
 }
 
+void testing(int size) {
+    //Create a LinkedList of Size 5;
+    int value = 1;
+    Node * test1 = createNode(value);
+    value++;
+
+    while(value != size) {
+        appendToTail(test1, value);
+        value++;
+    }
+    printList(test1);
+    Node * nodeToDelete = findNode(test1, 7)
+    printf("testing");
+}
+
+
+
 int main() {
-    struct Node * linked1 = createNode(5);
+    Node * linked1 = createNode(5);
     appendToTail(linked1, 4);
     printList(linked1);
     appendToTail(linked1, 6);
     printList(linked1);
-    struct Node * nodeToDelete = findNode(linked1, 4);
+    Node * nodeToDelete = findNode(linked1, 4);
     deleteMid(nodeToDelete);
     printList(linked1);
     
