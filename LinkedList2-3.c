@@ -1,26 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-typedef struct Node {    /* What the node is:
-       Pointer to next node
-       Each node has data
-    */
+typedef struct Node {    
     struct Node* next;
     int data;
 }Node;
 
 Node * createNode (int d) {
-    Node * newNode = malloc(sizeof(Node));
-    newNode->next = NULL;
+    Node * newNode = malloc(sizeof(Node)); // returns address of the memory allocated
+    newNode->next = NULL;                  // returns the value pointed to on the heap (memory)
     newNode->data = d;
-    return newNode;
-    /*
-    newNode -> returns address of the memory allocated
-    *newNode -> returns the value pointed to on the heap (memory)
-    &newNode -> returns the pointer address on the stack (temporary within the function call)
-    */
+    return newNode; //returns the address on newly allocated node which resides in the HEAPER
 }
+
 //return status if memory runs out
 int appendToTail(Node* head, int d) {
     Node* end = createNode(d);
@@ -34,6 +26,7 @@ int appendToTail(Node* head, int d) {
     iter->next = end;
     return 1;
 }
+
 Node * findNode(Node * head, int d) {
     while(head != NULL) {
         if(head->data == d) {
@@ -98,19 +91,19 @@ void testing(int size) {
         value++;
     }
     printList(test1);
-    Node * nodeToDelete = findNode(test1, 7)
+    Node * nodeToDelete = findNode(test1, 7);
     printf("testing");
 }
-
-
 
 int main() {
     Node * linked1 = createNode(5);
     appendToTail(linked1, 4);
     printList(linked1);
     appendToTail(linked1, 6);
-    printList(linked1);
-    Node * nodeToDelete = findNode(linked1, 4);
+    printList(linked1); 
+    Node * nodeToDelete = findNode(linked1, 4); // I suggest that you make findNode and deleteMid into one function
+                                                // From the user's perspective think that we want to do something while hiding the details
+						// this doesn't hide the details because the user has to do it themselves.
     deleteMid(nodeToDelete);
     printList(linked1);
     
