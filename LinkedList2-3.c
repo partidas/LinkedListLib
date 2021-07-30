@@ -34,6 +34,7 @@ int appendToTail(Node* head, int d) {
     iter->next = end;
     return 1;
 }
+
 Node * findNode(Node * head, int d) {
     while(head != NULL) {
         if(head->data == d) {
@@ -57,12 +58,25 @@ Node * findNode(Node * head, int d) {
          the next pointer on that node needs to be set to null;
          or run a finde node manually without a call to it.
 */
-int deleteNode(Node * head, int n) {
+Node * deleteNode(Node * head, int n) {
     printf("Deleting Node with value %d...\n", n);
-    Node * nNode = findNode(head, n);
-    if(nNode == NULL) {
-        printf("Does not exist\n");
-        return 0;
+    Node * iter = head;
+    //if the head is the node to delete
+    if(iter->data == n) {
+        printf("Node Found, its the Head\n");
+        iter = iter->next;
+        free(head);
+        return iter; //return the new head
+    }
+
+    //Find the node in the linkedList and delete
+    //check the next node if its the one we are looking for.
+    while(iter->next != NULL) {
+        //if the node was found
+        if(head->next->data == n) {
+            head->next = head->next->next; 
+            return 1; 
+        }
     }
     printf("Node found! %d\n", nNode->data);
     //if Node to delete is the tail:
