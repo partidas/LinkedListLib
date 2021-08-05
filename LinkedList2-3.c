@@ -7,16 +7,43 @@ newNode -> returns address of the memory allocated
 &newNode -> returns the pointer address on the stack (temporary within the function call)
 */
 
-typedef struct Node {    /* What the node is:
-       Pointer to next node
-       Each node has data
-    */
+/* Struct declaration: Node
+ * --------------------------
+ * Node is created as a datatype
+ * Node has the following elements:  * 
+ *      next: struct Node * - the Node pointer to the next Node in the
+ *                             linkedlist.
+ *      data: int - value the Node holds is this.
+ *      size: int - only used for the head Node and holds the size of
+ *                        linkedlist
+ *      head: int - boolean to declare/determine if the current Node
+ *                        is the head of the linkedlist.
+ * 
+ * Comments: Using typedef to avoid having to state "struct Node" everytime a 
+ *           Node is called on. (Thanks for the tip Max!)
+ */
+typedef struct Node { 
     struct Node* next;
     int data;
     int size;
     int head;
 }Node;
 
+
+/* Function: createNode
+ * --------------------------
+ * Helper function that creates a single Node, allocating memory of size Node 
+ * and initializing the data to user's input and stating if its the head; can 
+ * only be head if its the first element of the linkedlist.
+ * 
+ * d        : int - data value stored in the Node
+ * isHead   : int - 1 is its the head and 0 means its not
+ * 
+ * Returns: the Node * of the newly created Node, the pointer points to the
+ *          place in memory where the Node was allocated.
+ *          does not handle error if no memory for a new Node 
+ *          (handled by appendToTail). 
+ */
 Node * createNode (int d, int isHead) {
     Node * newNode = malloc(sizeof(Node));
     newNode->next = NULL;
@@ -28,7 +55,18 @@ Node * createNode (int d, int isHead) {
     return newNode;
 }
 
-//return status if memory runs out
+/* Function: appendToTail
+ * --------------------------
+ * Creates a newNode and adds it to the end of the provided linked list with
+ * user provided value.
+ * 
+ * head     : Node* - the head of the linkedlist where a new node is added to
+ * d        : int   - the value the new node will have
+ * 
+ * Returns: 1 if no issues and the node was successfully created and appended
+ *          to the end of the linkedlist
+ *          -1 if there was an error allocating memory. 
+ */
 int appendToTail(Node* head, int d) {
     Node* end = createNode(d, 0);
     if(end == NULL) {
