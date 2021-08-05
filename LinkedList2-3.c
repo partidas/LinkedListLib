@@ -106,10 +106,12 @@ Node * findNode(Node * head, int d) {
     return NULL;
 }
 
-//Deletes a node from LinkedList.
-//Input - int n - the Node with value n that needs to be removed.
-//Input - Node * head - pointer to the linkedList
-//Returns 1 or 0 - 1 if found and deleted, 0 if it did not find. -1 if error
+/* NEED TO FORMAT COMMENT
+ * Deletes a node from LinkedList.
+ * Input - int n - the Node with value n that needs to be removed.
+ * Input - Node * head - pointer to the linkedList
+ * Returns 1 or 0 - 1 if found and deleted, 0 if it did not find. -1 if error
+ */
 int deleteNode(Node * head, int n) {
     printf("Deleting Node with value %d...\n", n);
     
@@ -163,7 +165,7 @@ int deleteNode(Node * head, int n) {
  * 
  * head     : Node* - points to the head of the linkedlist we will be printing
  * 
- * Returns: No returns, it just prints out the value of each Node.
+ * Returns: No returns, it just prints out the value of each Node. 
  */
 void printList(Node* head) {
     Node* iter = head;
@@ -177,7 +179,7 @@ void printList(Node* head) {
     printf("\nLinked List Printed!\n");
 }
 
-//2.3
+//2.3 - NEED TO ADD COMMENT
 void deleteMid(Node* n) {
     Node* temp = n->next;
 /*    if(n->next != NULL) {
@@ -195,7 +197,9 @@ void deleteMid(Node* n) {
     }
 }
 
-//Find and return the kth to last element of singly linked list
+/* NEED TO FORMAT COMMENT
+ * Find and return the kth to last element of singly linked list
+ */
 int findKth(Node * head, int k) {
     if(k > head->size) {
         printf("%dth to last element does not exist!!\n", k);
@@ -218,8 +222,10 @@ int findKth(Node * head, int k) {
 }
 
 
-//function to create auto testing
-//not finished implementing
+/* NEED TO FORMAT COMMENT
+ * function to create auto testing
+ * not finished implementing
+ */
 void testing(int size) {
     //Create a LinkedList of Size 5;
     int value = 1;
@@ -235,6 +241,7 @@ void testing(int size) {
     printf("testing");
 }
 
+/*NEED TO CLEAN THIS UP AND CREATE A TEST FILE FOR AUTOMATED TESTING*/
 int main() {
     Node * linked1 = createNode(5, 1);
     printf("LinkedList size: %d\n", linked1->size);
