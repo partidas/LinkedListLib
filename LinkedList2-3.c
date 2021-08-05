@@ -153,9 +153,20 @@ int deleteNode(Node * head, int n) {
 }
 
 
-//print out linked list
-void printList(Node* n) {
-    Node* iter = n;
+/* Function: printList
+ * --------------------------
+ * Traverses the linkedlist and prints out the value in each Node one by 
+ * one with an arrow between each value to show the "links" aka pointers
+ * between each Node
+ * 
+ * Runtime: O(n) - because it needs to traverse each Node til the end.
+ * 
+ * head     : Node* - points to the head of the linkedlist we will be printing
+ * 
+ * Returns: No returns, it just prints out the value of each Node.
+ */
+void printList(Node* head) {
+    Node* iter = head;
     printf("%d ", iter->data);
     iter = iter->next;
     while(iter != NULL) {
