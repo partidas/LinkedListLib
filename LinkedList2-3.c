@@ -81,6 +81,19 @@ int appendToTail(Node* head, int d) {
     return 1;
 }
 
+/* Function: findNode
+ * --------------------------
+ * Traverses the linkedlist to find the Node with the value d provided by the
+ * user. 
+ * 
+ * Search Algorithm Used: Linear with an O(n) and Omega(1)
+ * 
+ * head     : Node* - the head of the linkedlist we need to search in
+ * d        : int   - the value the node data we need to find
+ * 
+ * Returns: Node* if the Node with the value int d is found
+ *          NULL if the value d is not found in the linkedlist
+ */
 Node * findNode(Node * head, int d) {
     while(head != NULL) {
         if(head->data == d) {
