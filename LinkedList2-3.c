@@ -25,9 +25,13 @@ newNode -> returns address of the memory allocated
 typedef struct Node { 
     struct Node* next;
     int data;
-    int size;
-    int head;
 }Node;
+
+typedef struct myLinkedList {
+    Node * head;
+    Node * tail;
+    int size;
+}
 
 
 /* Function: createNode
@@ -44,14 +48,10 @@ typedef struct Node {
  *          does not handle error if no memory for a new Node 
  *          (handled by appendToTail). 
  */
-Node * createNode (int d, int isHead) {
+Node * createNode (int d) {
     Node * newNode = malloc(sizeof(Node));
     newNode->next = NULL;
     newNode->data = d;
-    newNode->head = isHead;
-    if(isHead = 1) {
-        newNode->size = 1;
-    }
     return newNode;
 }
 
