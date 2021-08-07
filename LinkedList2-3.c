@@ -7,7 +7,7 @@ newNode -> returns address of the memory allocated
 &newNode -> returns the pointer address on the stack (temporary within the function call)
 */
 
-/* Struct declaration: Node
+/* Struct declaration: Node *********EDIT COMMENTS TO SEPARATE THE STRUCTS*****
  * --------------------------
  * Node is created as a datatype
  * Node has the following elements:  * 
@@ -22,17 +22,16 @@ newNode -> returns address of the memory allocated
  * Comments: Using typedef to avoid having to state "struct Node" everytime a 
  *           Node is called on. (Thanks for the tip Max!)
  */
-typedef struct Node { 
-    struct Node* next;
+typedef struct Node{ 
+    struct Node * next;
     int data;
 }Node;
 
-typedef struct myLinkedList {
+typedef struct {
     Node * head;
     Node * tail;
     int size;
-}
-
+}myLinkedList;
 
 /* Function: createNode
  * --------------------------
@@ -41,7 +40,6 @@ typedef struct myLinkedList {
  * only be head if its the first element of the linkedlist.
  * 
  * d        : int - data value stored in the Node
- * isHead   : int - 1 is its the head and 0 means its not
  * 
  * Returns: the Node * of the newly created Node, the pointer points to the
  *          place in memory where the Node was allocated.
@@ -60,20 +58,21 @@ Node * createNode (int d) {
  * Creates a newNode and adds it to the end of the provided linked list with
  * user provided value.
  * 
- * head     : Node* - the head of the linkedlist where a new node is added to
+ * list     : myLinkedList - takes in myLinkedList struct which holds head and
+ *                           tail pointers and size of the linkedlist
  * d        : int   - the value the new node will have
  * 
  * Returns: 1 if no issues and the node was successfully created and appended
  *          to the end of the linkedlist
  *          -1 if there was an error allocating memory. 
  */
-int appendToTail(Node* head, int d) {
-    Node* end = createNode(d, 0);
+int appendToTail(myLinkedList list, int d) {
+    Node * end = createNode(d);
     if(end == NULL) {
         return -1;
     }
-    Node* iter = head;
-    head->size += 1;
+    Node * iter = list.head;
+    list.size += 1;
     while (iter->next != NULL) {
         iter = iter->next;
     }
@@ -88,13 +87,15 @@ int appendToTail(Node* head, int d) {
  * 
  * Search Algorithm Used: Linear with an O(n) and Omega(1)
  * 
- * head     : Node* - the head of the linkedlist we need to search in
+ * list     : myLinkedList - takes in myLinkedList struct which holds head and
+ *                           tail pointers and size of the linkedlist
  * d        : int   - the value the node data we need to find
  * 
  * Returns: Node* if the Node with the value int d is found
  *          NULL if the value d is not found in the linkedlist
  */
-Node * findNode(Node * head, int d) {
+Node * findNode(myLinkedList list, int d) {
+    Node * head = list.head;
     while(head != NULL) {
         if(head->data == d) {
             printf("FOUND %d\n", d);
@@ -112,26 +113,23 @@ Node * findNode(Node * head, int d) {
  * Input - Node * head - pointer to the linkedList
  * Returns 1 or 0 - 1 if found and deleted, 0 if it did not find. -1 if error
  */
-int deleteNode(Node * head, int n) {
+int deleteNode(myLinkedList list, int n) {
     printf("Deleting Node with value %d...\n", n);
     
-    Node * iter = head;
+    Node * iter = list.head;
     Node * temp;
     //if the head is the node to delete
-    if(head->data == n) {
+    if(iter->data == n) {
         printf("Node Found, its the Head\n");
-        if(head->next == NULL) {
-            free(head);
+        if(iter->next == NULL) {
+            list.head = NULL;
+            free(iter);
             printf("LinkedList now empty\n");
             return 1;
-        } else { //instead of deleting the node, we will update the head node's
-                 //data to the next node's and delete the next node.
-                 // this is to keep the head node pointer, since we return int.
-            iter->data = iter->next->data;
-            temp = iter->next;
-            iter->next = iter->next->next;
-            head->size -= 1;
-            free(temp);
+        } else {
+            list.head = iter->next;
+            list.size -= 1;
+            free(iter);
             return 1; //return the new head
         }
     }
@@ -144,7 +142,7 @@ int deleteNode(Node * head, int n) {
             printf("Node found and deleted! %d\n", iter->next->data);
             temp = iter->next;
             iter->next = iter->next->next;
-            head->size -= 1;
+            list.size -= 1;
             free(temp); 
             return 1; 
         }
@@ -167,8 +165,8 @@ int deleteNode(Node * head, int n) {
  * 
  * Returns: No returns, it just prints out the value of each Node. 
  */
-void printList(Node* head) {
-    Node* iter = head;
+void printList(myLinkedList list) {
+    Node* iter = list.head;
     printf("%d ", iter->data);
     iter = iter->next;
     while(iter != NULL) {
@@ -179,14 +177,14 @@ void printList(Node* head) {
     printf("\nLinked List Printed!\n");
 }
 
-//2.3 - NEED TO ADD COMMENT
-void deleteMid(Node* n) {
+//2.3 - NEED TO ADD COMMENT **NEED TO UPDATE TO ACCOUNT FOR myLinkedList struct
+void deleteMid(Node * n) {
     Node* temp = n->next;
 /*    if(n->next != NULL) {
         struct Node* temp = n->next;
     }*/
     n->data = n->next->data;
-    //if a size 3 Linked list, makes sure that if removing mid, end pointing to null.
+    //if a size 3 Linked list, makes sure if removing mid, end pointing to null.
     if(n->next->next != NULL) {
         n->next = n->next->next;
     } else {
@@ -200,15 +198,15 @@ void deleteMid(Node* n) {
 /* NEED TO FORMAT COMMENT
  * Find and return the kth to last element of singly linked list
  */
-int findKth(Node * head, int k) {
-    if(k > head->size) {
+int findKth(myLinkedList list, int k) {
+    if(k > list.size) {
         printf("%dth to last element does not exist!!\n", k);
         return -1;
     }
 
-    int index = head->size - k;
+    int index = list.size - k;
     int iter = 0;
-    Node * linkedIter= head;
+    Node * linkedIter= list.head;
     while(iter != index) {
         linkedIter = linkedIter->next;
         iter++;
@@ -227,64 +225,19 @@ int findKth(Node * head, int k) {
  * not finished implementing
  */
 void testing(int size) {
-    //Create a LinkedList of Size 5;
-    int value = 1;
-    Node * test1 = createNode(value, 1);
-    value++;
 
-    while(value != size) {
-        appendToTail(test1, value);
-        value++;
-    }
-    printList(test1);
-    Node * nodeToDelete = findNode(test1, 7);
-    printf("testing");
 }
 
 /*NEED TO CLEAN THIS UP AND CREATE A TEST FILE FOR AUTOMATED TESTING*/
 int main() {
-    Node * linked1 = createNode(5, 1);
-    printf("LinkedList size: %d\n", linked1->size);
-    appendToTail(linked1, 4);
-    appendToTail(linked1, 6);
-    // linked1: 5 -> 4 -> 6
-    /*printList(linked1);
-    printf("LinkedList size: %d\n", linked1->size);
-    Node * nodeToDelete = findNode(linked1, 4);
-    deleteNode(linked1, 6);
-    printf("LinkedList size: %d\n", linked1->size);
-    // linked1: 5 -> 4
-    printList(linked1);
-    appendToTail(linked1, 7);
-    printf("LinkedList size: %d\n", linked1->size);
-    // linked1: 5 -> 4 -> 7
-    printList(linked1);
-    deleteNode(linked1, 5);
-    printf("LinkedList size: %d\n", linked1->size);
-    // linked1: 4 -> 7
-    printList(linked1);
-    appendToTail(linked1, 5);
-    // linked1: 4 -> 7 -> 5
-    printList(linked1);
-    deleteNode(linked1, 6);
-    printList(linked1);
-    deleteNode(linked1, 4);
-    printList(linked1);
-    deleteNode(linked1, 5);
-    printf("LinkedList size: %d\n", linked1->size);
-    printList(linked1);
-    deleteNode(linked1, 7);
-    deleteNode(linked1, 4); */
-    appendToTail(linked1, 9);
-    appendToTail(linked1, 15);
-    appendToTail(linked1, 1);
-    printList(linked1);
-    printf("LinkedList size: %d\n", linked1->size);
+    myLinkedList list1;
+    list1.head = createNode(5);
+    list1.tail = NULL;
+    list1.size = 1;
 
-    printf("\n3rd to last element: %d\n", findKth(linked1, 3));
-    printf("\n2nd to last element: %d\n", findKth(linked1, 2));
-    printf("\n5th to last element: %d\n", findKth(linked1, 5));
-    printf("\n6th to last element: %d\n", findKth(linked1, 6));
-    printf("\n7th to last element: %d\n", findKth(linked1, 7));
+    printf("LinkedList size: %d\n", list1.size);
+    printList(list1);
+    appendToTail(list1, 4);
+    appendToTail(list1, 6);
     return 0;
 }
