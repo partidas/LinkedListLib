@@ -115,22 +115,22 @@ Node * findNode(myLinkedList list, int d) {
  * Input - Node * head - pointer to the linkedList
  * Returns 1 or 0 - 1 if found and deleted, 0 if it did not find. -1 if error
  */
-int deleteNode(myLinkedList list, int n) {
+int deleteNode(myLinkedList * list, int n) {
     printf("Deleting Node with value %d...\n", n);
     
-    Node * iter = list.head;
+    Node * iter = list->head;
     Node * temp;
     //if the head is the node to delete
     if(iter->data == n) {
         printf("Node Found, its the Head\n");
         if(iter->next == NULL) {
-            list.head = NULL;
+            list->head = NULL;
             free(iter);
             printf("LinkedList now empty\n");
             return 1;
         } else {
-            list.head = iter->next;
-            list.size -= 1;
+            list->head = iter->next;
+            list->size -= 1;
             free(iter);
             return 1; //return the new head
         }
@@ -144,7 +144,7 @@ int deleteNode(myLinkedList list, int n) {
             printf("Node found and deleted! %d\n", iter->next->data);
             temp = iter->next;
             iter->next = iter->next->next;
-            list.size -= 1;
+            list->size -= 1;
             free(temp); 
             return 1; 
         }
@@ -239,7 +239,14 @@ int main() {
     appendToTail(&list1, 4);
     appendToTail(&list1, 6);
     printList(list1);
-    printf("LinkedList Head: %d\n", list1.head->next->next->data);
+    printf("LinkedList Head: %d\n", list1.head->data);
     printf("LinkedList Tail: %d\n", list1.tail->data);
+    printf("LinkedList size: %d\n", list1.size);
+
+    deleteNode(&list1, 4);
+    deleteNode(&list1, 5);
+    deleteNode(&list1, 6);
+    printList(list1); //seg fault because its NULL now.
+
     return 0;
 }
