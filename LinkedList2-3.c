@@ -66,18 +66,19 @@ Node * createNode (int d) {
  *          to the end of the linkedlist
  *          -1 if there was an error allocating memory. 
  */
-int appendToTail(myLinkedList list, int d) {
+int appendToTail(myLinkedList * list, int d) {
     Node * end = createNode(d);
     if(end == NULL) {
         return -1;
     }
-    Node * iter = list.head;
-    list.size += 1;
+    Node * iter = list->head;
+    list->size += 1;
     while (iter->next != NULL) {
         iter = iter->next;
     }
     iter->next = end;
-    list.tail = end;
+    list->tail = end;
+    printf("\nInside appendToTail-- list.tail->data is %d\n",list->tail->data);
     return 1;
 }
 
@@ -233,13 +234,12 @@ void testing(int size) {
 int main() {
     myLinkedList list1;
     list1.head = createNode(5);
-    list1.tail = NULL;
     list1.size = 1;
     printf("LinkedList size: %d\n", list1.size);
-    appendToTail(list1, 4);
-    appendToTail(list1, 6);
+    appendToTail(&list1, 4);
+    appendToTail(&list1, 6);
     printList(list1);
     printf("LinkedList Head: %d\n", list1.head->next->next->data);
-    //printf("LinkedList Tail: %d\n", list1.tail->data);
+    printf("LinkedList Tail: %d\n", list1.tail->data);
     return 0;
 }
