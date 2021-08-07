@@ -77,6 +77,7 @@ int appendToTail(myLinkedList list, int d) {
         iter = iter->next;
     }
     iter->next = end;
+    list.tail = end;
     return 1;
 }
 
@@ -234,10 +235,11 @@ int main() {
     list1.head = createNode(5);
     list1.tail = NULL;
     list1.size = 1;
-
     printf("LinkedList size: %d\n", list1.size);
-    printList(list1);
     appendToTail(list1, 4);
     appendToTail(list1, 6);
+    printList(list1);
+    printf("LinkedList Head: %d\n", list1.head->next->next->data);
+    //printf("LinkedList Tail: %d\n", list1.tail->data);
     return 0;
 }
