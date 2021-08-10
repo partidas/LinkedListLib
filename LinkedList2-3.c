@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 /* ***NOTES***
 newNode -> returns address of the memory allocated
 *newNode -> returns the value pointed to on the heap (memory)
@@ -67,19 +68,21 @@ Node * createNode (int d) {
  *          -1 if there was an error allocating memory. 
  */
 int appendToTail(myLinkedList * list, int d) {
-    Node * end = createNode(d);
-    if(end == NULL) {
+    Node * newNode = createNode(d);
+    if(newNode == NULL) {
         return -1;
+    } else if(list->head == NULL) {
+        list->head = newNode;
+        list->size = 1;
+        list->tail = list->head;
+        return 1;
+    } else {
+        list->tail->next = newNode;
+        list->tail = newNode;
+        list->size += 1;
+        printf("\nAppending to Tail -- list.tail->data is %d\n",list->tail->data);
+        return 1;
     }
-    Node * iter = list->head;
-    list->size += 1;
-    while (iter->next != NULL) {
-        iter = iter->next;
-    }
-    iter->next = end;
-    list->tail = end;
-    printf("\nInside appendToTail-- list.tail->data is %d\n",list->tail->data);
-    return 1;
 }
 
 /* Function: findNode
@@ -233,8 +236,7 @@ void testing(int size) {
 /*NEED TO CLEAN THIS UP AND CREATE A TEST FILE FOR AUTOMATED TESTING*/
 int main() {
     myLinkedList list1;
-    list1.head = createNode(5);
-    list1.size = 1;
+    appendToTail(&list1, 5);
     printf("LinkedList size: %d\n", list1.size);
     appendToTail(&list1, 4);
     appendToTail(&list1, 6);
