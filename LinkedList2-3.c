@@ -210,8 +210,8 @@ int findKth(myLinkedList list, int k) {
     }
 
     int index = list.size - k;
+    Node * linkedIter = list.head;
     int iter = 0;
-    Node * linkedIter= list.head;
     while(iter != index) {
         linkedIter = linkedIter->next;
         iter++;
@@ -236,11 +236,18 @@ void testing(int size) {
 /*NEED TO CLEAN THIS UP AND CREATE A TEST FILE FOR AUTOMATED TESTING*/
 int main() {
     myLinkedList list1;
-    appendToTail(&list1, 5);
-    printf("LinkedList size: %d\n", list1.size);
+    appendToTail(&list1, 1);
+    appendToTail(&list1, 2);
+    appendToTail(&list1, 3);
     appendToTail(&list1, 4);
-    appendToTail(&list1, 6);
+    appendToTail(&list1, 5);
     printList(list1);
+    
+    printf("%dnd to last element is: %d\n", 2, findKth(list1,2));
+    printf("%dnd to last element is: %d\n", 3, findKth(list1,3));
+    printf("%dnd to last element is: %d\n", 4, findKth(list1,4));
+
+
     printf("LinkedList Head: %d\n", list1.head->data);
     printf("LinkedList Tail: %d\n", list1.tail->data);
     printf("LinkedList size: %d\n", list1.size);
