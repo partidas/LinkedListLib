@@ -172,18 +172,25 @@ void printList(myLinkedList list) {
 }
 
 //2.3 - NEED TO ADD COMMENT **NEED TO UPDATE TO ACCOUNT FOR myLinkedList struct
-void deleteMid(Node * n) {
+void deleteMid(myLinkedList * list, Node * n) {
+    //Check if node to delete is head or tail
+    if(n == list->head || n == list->tail) {
+        printf("Cannot delete head or tail!\n");
+        return;
+    }
+
+    //create temp node for a "fake delete"
     Node* temp = n->next;
-/*    if(n->next != NULL) {
-        struct Node* temp = n->next;
-    }*/
     n->data = n->next->data;
+    list->size--;
+
     //if a size 3 Linked list, makes sure if removing mid, end pointing to null.
     if(n->next->next != NULL) {
         n->next = n->next->next;
     } else {
         n->next  = NULL;
     }
+
     if(temp != NULL) {
         free(temp);
     }
@@ -225,12 +232,12 @@ void testing(int size) {
 /*NEED TO CLEAN THIS UP AND CREATE A TEST FILE FOR AUTOMATED TESTING*/
 int main() {
     myLinkedList list1;
-    //appendToTail(&list1, 7);
-    //appendToTail(&list1, 6);
+    appendToTail(&list1, 7);
+    appendToTail(&list1, 6);
     appendToTail(&list1, 5);
     appendToTail(&list1, 4);
-    //appendToTail(&list1, 3);
-    //appendToTail(&list1, 2);
+    appendToTail(&list1, 3);
+    appendToTail(&list1, 2);
     printList(list1);
     
     printf("%dnd to last element is: %d\n", 2, findKth(list1,2));
@@ -247,7 +254,18 @@ int main() {
     deleteNode(&list1, 8);
     deleteNode(&list1, 4);
     deleteNode(&list1, 5);
-    printList(list1); //seg fault because its NULL now.
+    printList(list1); //seg fault when linkedlist NULL
+
+    deleteMid(&list1, list1.head->next); // Normal mid delete test
+    deleteMid(&list1, list1.head); // Delete head attempt
+    deleteMid(&list1, list1.tail); // Delete tail attempt
+    printList(list1);
+    deleteMid(&list1, list1.head->next); // Normal mid delete test
+    
+    printList(list1);
+    deleteMid(&list1, list1.head->next); // Normal mid delete test
+    
+    printList(list1);
 
     return 0;
 }
