@@ -220,6 +220,16 @@ int findKth(myLinkedList list, int k) {
     }
 }
 
+int isPalindrome(myLinkedList list) {
+    //check if the list is length 1 or less
+    if(list.size <= 1) {
+        return 1;
+    }
+
+    //loop through and check -- implement a stack
+
+}
+
 
 /* NEED TO FORMAT COMMENT
  * function to create auto testing
@@ -243,6 +253,8 @@ int main() {
     printf("%dnd to last element is: %d\n", 2, findKth(list1,2));
     printf("%dnd to last element is: %d\n", 3, findKth(list1,3));
     printf("%dnd to last element is: %d\n", 4, findKth(list1,4));
+    printf("%dnd to last element is: %d\n", 5, findKth(list1,5));
+    printf("%dnd to last element is: %d\n", 6, findKth(list1,6));
 
     printf("Found element %d\n", findNode(list1, 3)->data);
 
@@ -253,6 +265,8 @@ int main() {
     
     deleteNode(&list1, 8);
     deleteNode(&list1, 4);
+    printf("%dnd to last element is: %d\n", 6, findKth(list1,7));
+
     deleteNode(&list1, 5);
     printList(list1); //seg fault when linkedlist NULL
 
