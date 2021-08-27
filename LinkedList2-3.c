@@ -227,6 +227,14 @@ int isPalindrome(myLinkedList list) {
     }
 
     //loop through and check -- implement a stack
+    //create an array half the size of length to copy the list's end contents
+    int listMidpoint = list.size / 2;
+    int listEndHalf [listMidpoint];
+    int listIter = 0;
+    
+    while(listIter < listMidpoint) {
+
+    }
 
 }
 
